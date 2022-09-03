@@ -6,7 +6,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
 
-import HomeReducer from '../screens/Home/reducer';
 import AddCatReducer from '../screens/AddCats/reducer';
 
 const persistConfig = {
@@ -16,7 +15,6 @@ const persistConfig = {
 };
 
 const appReducer = combineReducers({
-    home: HomeReducer,
     addCat: persistReducer(persistConfig, AddCatReducer),
 });
 
