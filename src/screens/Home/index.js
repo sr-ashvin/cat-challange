@@ -5,6 +5,7 @@ import {
     View,
     FlatList,
     Alert,
+    Image,
 } from 'react-native';
 import React, { useState } from 'react';
 import Modal from 'react-native-modal';
@@ -12,6 +13,15 @@ import { useDispatch, useSelector } from 'react-redux';
 /**********Custom Import ************/
 import { NAVIGATION } from '../../common/constants';
 import { deleteCatItem } from '../AddCats/actions';
+import {
+    AbsoluteButton,
+    ButtonWithIcon,
+    Cards,
+    EmptyData,
+} from '../../components';
+import { Colors, fontSize } from '../../themes';
+import { images } from '../../common/assets/images';
+import { notifyMessage } from '../../common/utils';
 
 const Home = ({ navigation }) => {
     const dispatch = useDispatch();
@@ -25,7 +35,7 @@ const Home = ({ navigation }) => {
     const { list } = useSelector((state) => state?.addCat);
 
     const onPressDelete = () => {
-        Alert.alert('App', 'Are you sure to delete?', [
+        Alert.alert('Cattify', 'Are you sure to delete?', [
             { text: 'NO' },
             {
                 text: 'YES',
@@ -33,6 +43,7 @@ const Home = ({ navigation }) => {
                     dispatch(deleteCatItem(selectedIndex)).then(() => {
                         setModalVisible(!isModalVisible);
                         setSelectedIndex(null);
+                        notifyMessage('Successfully Deleted');
                     });
                 },
             },
@@ -40,82 +51,49 @@ const Home = ({ navigation }) => {
     };
     const onPressUpdate = () => {
         setModalVisible(!isModalVisible);
-        navigation.navigate(NAVIGATION.AddCats, { id: selectedIndex });
+        navigation.navigate(NAVIGATION.AddCats, {
+            id: selectedIndex,
+            name: 'Update Cat',
+        });
     };
-
     const renderItem = ({ item, index }) => (
-        <View key={index} style={{ flexDirection: 'row' }}>
-            <Text>{item.name}</Text>
-            <Text>{item.breed}</Text>
-            <Text>{item.description}</Text>
-            <TouchableOpacity
-                onPress={() => {
-                    toggleModal(index);
-                }}
-                style={{ padding: 10, backgroundColor: 'red' }}
-            >
-                <Text>option</Text>
-            </TouchableOpacity>
-        </View>
+        <Cards item={item} index={index} onPress={toggleModal} />
     );
     return (
-        <View style={{ flexGrow: 1 }}>
+        <View style={styles.container}>
             <FlatList
                 data={list}
                 renderItem={renderItem}
                 removeClippedSubviews
                 keyExtractor={(item, index) => index}
                 extraData={list}
+                ListEmptyComponent={<EmptyData />}
             />
-            <TouchableOpacity
-                style={{
-                    position: 'absolute',
-                    bottom: 30,
-                    right: 30,
-                    width: 50,
-                    height: 50,
-                    borderRadius: 50,
-                    backgroundColor: 'red',
-                }}
-                onPress={() => navigation.navigate(NAVIGATION.AddCats)}
-            >
-                <Text
-                    style={{
-                        fontSize: 25,
-                        textAlign: 'center',
-
-                        padding: 8,
-                        color: 'white',
-                    }}
-                >
-                    +
-                </Text>
-            </TouchableOpacity>
+            <AbsoluteButton
+                onPress={() =>
+                    navigation.navigate(NAVIGATION.AddCats, {
+                        name: 'Add New Cat',
+                    })
+                }
+            />
             <Modal
                 isVisible={isModalVisible}
                 swipeDirection={['up', 'left', 'right', 'down']}
                 onBackdropPress={toggleModal}
                 style={styles.view}
             >
-                <View
-                    style={{
-                        height: 200,
-                        borderWidth: 1,
-                        backgroundColor: 'white',
-                    }}
-                >
-                    <TouchableOpacity
+                <View style={styles.modalView}>
+                    <ButtonWithIcon
+                        text='Update'
                         onPress={onPressUpdate}
-                        style={styles.button}
-                    >
-                        <Text>Update</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
+                        image={images.edit}
+                        hasBorder
+                    />
+                    <ButtonWithIcon
+                        text='Delete'
                         onPress={onPressDelete}
-                        style={styles.button}
-                    >
-                        <Text>Delete</Text>
-                    </TouchableOpacity>
+                        image={images.delete}
+                    />
                 </View>
             </Modal>
         </View>
@@ -125,15 +103,16 @@ const Home = ({ navigation }) => {
 export { Home };
 
 const styles = StyleSheet.create({
+    container: { flexGrow: 1, backgroundColor: Colors.primary },
     view: {
         justifyContent: 'flex-end',
-        margin: 0,
+        margin: 5,
     },
-    button: {
-        borderWidth: 1,
-        paddingVertical: 20,
-        alignContent: 'center',
-        alignItems: 'center',
-        margin: 10,
+    modalView: {
+        height: 180,
+        backgroundColor: Colors.white,
+        borderTopLeftRadius: 15,
+        borderTopRightRadius: 15,
+        paddingTop: 10,
     },
 });

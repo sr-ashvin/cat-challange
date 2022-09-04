@@ -6,7 +6,6 @@ import {
     UPDATE_CATS_ITEM,
 } from './actions';
 const INITIAL_STATE = {
-    isLoading: false,
     list: [],
     item: {},
 };
@@ -17,7 +16,7 @@ const AddCatReducer = (state = INITIAL_STATE, { type, payload }) => {
             const newData = [...state.list, payload];
             return {
                 ...state,
-                isLoading: true,
+
                 list: newData,
             };
         case DELETE_CATS:
@@ -26,7 +25,6 @@ const AddCatReducer = (state = INITIAL_STATE, { type, payload }) => {
             });
             return {
                 ...state,
-                isLoading: true,
                 list: deleteByIdList,
             };
         case GET_CATS:
@@ -35,7 +33,6 @@ const AddCatReducer = (state = INITIAL_STATE, { type, payload }) => {
             });
             return {
                 ...state,
-                isLoading: true,
                 item: getItemById?.[0],
             };
         case CLEAR_CATS_ITEM:
@@ -47,9 +44,9 @@ const AddCatReducer = (state = INITIAL_STATE, { type, payload }) => {
             const updatedData = state?.list.map((item, index) => {
                 return index !== payload.id ? item : payload.data;
             });
+            console.log('---->', updatedData);
             return {
                 ...state,
-                isLoading: true,
                 list: updatedData,
             };
 

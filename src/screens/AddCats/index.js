@@ -1,10 +1,4 @@
-import {
-    StyleSheet,
-    Text,
-    View,
-    TextInput,
-    TouchableOpacity,
-} from 'react-native';
+import { StyleSheet, Text, View, TextInput } from 'react-native';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -14,10 +8,12 @@ import {
     updateCatDetail,
 } from './actions';
 import { useEffect } from 'react';
+import { Button, Input } from '../../components';
+import { Colors } from '../../themes';
+import { notifyMessage } from '../../common/utils';
 
 const AddCat = ({ route, navigation }) => {
     const dispatch = useDispatch();
-    console.log(route?.params?.id);
     const { item } = useSelector((state) => state?.addCat);
 
     const [name, setName] = useState('');
@@ -48,44 +44,76 @@ const AddCat = ({ route, navigation }) => {
             breed,
             description,
         };
+        if (!name) {
+            notifyMessage('Enter cat name', 'error');
+            return;
+        }
+        if (!breed) {
+            notifyMessage('Enter cat breed', 'error');
+            return;
+        }
+        if (!description) {
+            notifyMessage('Enter cat description', 'error');
+            return;
+        }
+
         try {
-            const dispatchAction = route?.params?.id
-                ? updateCatDetail(params, route?.params?.id)
-                : setCatDetail(params);
+            let message = '';
+            if (typeof route?.params?.id != 'undefined') {
+                updateCatDetail(params, route?.params?.id);
+                message = 'successfully updated';
+            } else {
+                setCatDetail(params);
+                message = 'successfully added';
+            }
+            const dispatchAction =
+                typeof route?.params?.id != 'undefined'
+                    ? updateCatDetail(params, route?.params?.id)
+                    : setCatDetail(params);
 
             dispatch(dispatchAction).then(() => {
                 navigation.goBack();
+                notifyMessage(message);
             });
-        } catch (e) {}
+        } catch (e) {
+            console.log(e);
+        }
     };
+
     return (
-        <View
-            style={{
-                alignItems: 'center',
-            }}
-        >
-            <TextInput
-                style={styles.input}
+        <View style={styles.container}>
+            <Input
                 onChangeText={setName}
                 value={name}
-                placeholder='name'
-            />
-            <TextInput
-                style={styles.input}
-                onChangeText={setBreed}
-                value={breed}
-                placeholder='breed'
-            />
-            <TextInput
-                style={styles.input}
-                onChangeText={setDescription}
-                value={description}
-                placeholder='description'
+                placeholder='Enter Name'
+                label='name'
+                returnKeyType='next'
             />
 
-            <TouchableOpacity onPress={saveCat} style={styles.button}>
-                <Text>Add</Text>
-            </TouchableOpacity>
+            <Input
+                onChangeText={setBreed}
+                value={breed}
+                placeholder='Enter Breed'
+                label='Breed'
+                returnKeyType='next'
+            />
+
+            <Input
+                onChangeText={setDescription}
+                value={description}
+                placeholder='Enter Description'
+                label='Description'
+                multiline={true}
+                styleInput={styles.description}
+                returnKeyType='go'
+            />
+
+            <Button
+                onPress={saveCat}
+                text={
+                    typeof route?.params?.id != 'undefined' ? 'Update' : 'Save'
+                }
+            />
         </View>
     );
 };
@@ -93,21 +121,16 @@ const AddCat = ({ route, navigation }) => {
 export { AddCat };
 
 const styles = StyleSheet.create({
-    input: {
-        width: '80%',
-        borderWidth: 1,
-        height: 60,
-        marginVertical: 10,
-        paddingHorizontal: 10,
+    container: {
+        backgroundColor: Colors.primary,
+        flexGrow: 1,
+        paddingHorizontal: 20,
+        paddingTop: 10,
     },
-    button: {
-        backgroundColor: 'red',
-        width: '80%',
-        borderWidth: 1,
-        height: 60,
-        marginVertical: 10,
-        paddingHorizontal: 10,
-        alignItems: 'center',
-        justifyContent: 'center',
+    description: {
+        height: 150,
+        textAlignVertical: 'top',
+        paddingTop: 15,
+        borderRadius: 20,
     },
 });
