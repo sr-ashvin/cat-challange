@@ -71,11 +71,12 @@ const Home = ({ navigation }) => {
         <Cards item={item} index={index} onPress={toggleModal} />
     );
     const data = searchValue ? filterList : list;
+    console.log('------list---->', list);
     return (
         <View style={styles.container}>
-            {list && (
+            {list.length > 0 ? (
                 <SearchInput onPress={onPressSearch} value={searchValue} />
-            )}
+            ) : null}
             <FlatList
                 data={data}
                 renderItem={renderItem}
