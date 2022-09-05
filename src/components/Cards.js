@@ -71,11 +71,10 @@ const styles = StyleSheet.create({
 
         elevation: 5,
         marginVertical: 5,
-        marginHorizontal: 10,
         flexDirection: 'row',
         justifyContent: 'space-between',
         padding: 10,
-        marginHorizontal: 15,
+
         borderRadius: 15,
     },
     catImage: {

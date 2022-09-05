@@ -4,6 +4,8 @@ export const DELETE_CATS = `${CATS} Delete Request`;
 export const GET_CATS = `${CATS} Get Request`;
 export const CLEAR_CATS_ITEM = `${CATS} Clear Item Request`;
 export const UPDATE_CATS_ITEM = `${CATS} Update Item Request`;
+export const FILTER_CATS_ITEM = `${CATS} filter Item Request`;
+export const CLEAR_FILTER_CATS_ITEM = `${CATS} Clear filter Item Request`;
 
 export const setCatDetail = (data) => {
     return async (dispatch) => {
@@ -42,6 +44,22 @@ export const updateCatDetail = (data, id) => {
         dispatch({
             type: UPDATE_CATS_ITEM,
             payload: { data, id },
+        });
+    };
+};
+export const getFilterData = (text) => {
+    return async (dispatch) => {
+        dispatch({
+            type: FILTER_CATS_ITEM,
+            payload: { text: text },
+        });
+    };
+};
+export const clearFilterData = () => {
+    return async (dispatch) => {
+        dispatch({
+            type: CLEAR_FILTER_CATS_ITEM,
+            payload: [],
         });
     };
 };

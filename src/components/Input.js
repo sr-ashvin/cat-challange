@@ -2,28 +2,27 @@ import { StyleSheet, Text, View, TextInput } from 'react-native';
 import React from 'react';
 import { Colors, fontSize } from '../themes';
 
-const Input = ({
-    onChangeText,
-    placeholder,
-    label,
-    value,
-    styleInput,
-    ...otherProps
-}) => {
-    return (
-        <>
-            {label && <Text style={styles.labelStyle}>{label}</Text>}
-            <TextInput
-                style={[styles.input, styleInput]}
-                onChangeText={onChangeText}
-                value={value}
-                placeholder={placeholder}
-                placeholderTextColor={Colors.offWhite}
-                {...otherProps}
-            />
-        </>
-    );
-};
+const Input = React.forwardRef(
+    (
+        { onChangeText, placeholder, label, value, styleInput, ...otherProps },
+        ref
+    ) => {
+        return (
+            <>
+                {label && <Text style={styles.labelStyle}>{label}</Text>}
+                <TextInput
+                    ref={ref}
+                    style={[styles.input, styleInput]}
+                    onChangeText={onChangeText}
+                    value={value}
+                    placeholder={placeholder}
+                    placeholderTextColor={Colors.offWhite}
+                    {...otherProps}
+                />
+            </>
+        );
+    }
+);
 
 export { Input };
 

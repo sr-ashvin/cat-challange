@@ -4,10 +4,13 @@ import {
     GET_CATS,
     CLEAR_CATS_ITEM,
     UPDATE_CATS_ITEM,
+    FILTER_CATS_ITEM,
+    CLEAR_FILTER_CATS_ITEM,
 } from './actions';
 const INITIAL_STATE = {
     list: [],
     item: {},
+    filterList: [],
 };
 
 const AddCatReducer = (state = INITIAL_STATE, { type, payload }) => {
@@ -44,10 +47,25 @@ const AddCatReducer = (state = INITIAL_STATE, { type, payload }) => {
             const updatedData = state?.list.map((item, index) => {
                 return index !== payload.id ? item : payload.data;
             });
-            console.log('---->', updatedData);
+
             return {
                 ...state,
                 list: updatedData,
+            };
+        case FILTER_CATS_ITEM:
+            const filterData = state.list.filter((item) => {
+                console.log('ddddd-->', item.name);
+                return item.name.includes(payload.text);
+            });
+            console.log('---filterData rducer--->', filterData);
+            return {
+                ...state,
+                filterList: filterData,
+            };
+        case CLEAR_FILTER_CATS_ITEM:
+            return {
+                ...state,
+                filterList: payload,
             };
 
         default:

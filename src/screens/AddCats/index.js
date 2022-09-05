@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, TextInput } from 'react-native';
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
     setCatDetail,
@@ -19,6 +19,9 @@ const AddCat = ({ route, navigation }) => {
     const [name, setName] = useState('');
     const [breed, setBreed] = useState('');
     const [description, setDescription] = useState('');
+    const nameRef = useRef(null);
+    const breedRef = useRef(null);
+    const descriptionRef = useRef(null);
 
     useEffect(() => {
         dispatch(getCatDetailById(route?.params?.id));
@@ -46,14 +49,17 @@ const AddCat = ({ route, navigation }) => {
         };
         if (!name) {
             notifyMessage('Enter cat name', 'error');
+            nameRef.current.focus();
             return;
         }
         if (!breed) {
             notifyMessage('Enter cat breed', 'error');
+            breedRef.current.focus();
             return;
         }
         if (!description) {
             notifyMessage('Enter cat description', 'error');
+            descriptionRef.current.focus();
             return;
         }
 
@@ -87,7 +93,9 @@ const AddCat = ({ route, navigation }) => {
                 value={name}
                 placeholder='Enter Name'
                 label='name'
+                ref={nameRef}
                 returnKeyType='next'
+                onSubmitEditing={() => breedRef.current.focus()}
             />
 
             <Input
@@ -95,7 +103,9 @@ const AddCat = ({ route, navigation }) => {
                 value={breed}
                 placeholder='Enter Breed'
                 label='Breed'
+                ref={breedRef}
                 returnKeyType='next'
+                onSubmitEditing={() => descriptionRef.current.focus()}
             />
 
             <Input
@@ -105,7 +115,9 @@ const AddCat = ({ route, navigation }) => {
                 label='Description'
                 multiline={true}
                 styleInput={styles.description}
+                ref={descriptionRef}
                 returnKeyType='go'
+                onSubmitEditing={saveCat}
             />
 
             <Button

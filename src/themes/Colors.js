@@ -3,4 +3,6 @@ export const Colors = {
     white: '#ffffff',
     offWhite: '#ffffff33',
     purple: '#8602EB',
+    yellow: 'yellow',
+    orange: 'orange',
 };

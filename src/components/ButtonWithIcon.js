@@ -1,6 +1,6 @@
 import { StyleSheet, Text, TouchableOpacity, Image, View } from 'react-native';
 import React from 'react';
-import { Colors, fontSize } from '../themes';
+import { fontSize } from '../themes';
 
 const ButtonWithIcon = ({ text, onPress, image, hasBorder }) => {
     return (

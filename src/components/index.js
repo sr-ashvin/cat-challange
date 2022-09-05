@@ -4,3 +4,4 @@ export * from './Button';
 export * from './Cards';
 export * from './EmptyData';
 export * from './ButtonWithIcon';
+export * from './SearchInput';

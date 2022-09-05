@@ -12,14 +12,15 @@ import Modal from 'react-native-modal';
 import { useDispatch, useSelector } from 'react-redux';
 /**********Custom Import ************/
 import { NAVIGATION } from '../../common/constants';
-import { deleteCatItem } from '../AddCats/actions';
+import { deleteCatItem, getFilterData } from '../AddCats/actions';
 import {
     AbsoluteButton,
     ButtonWithIcon,
     Cards,
     EmptyData,
+    SearchInput,
 } from '../../components';
-import { Colors, fontSize } from '../../themes';
+import { Colors } from '../../themes';
 import { images } from '../../common/assets/images';
 import { notifyMessage } from '../../common/utils';
 
@@ -32,7 +33,8 @@ const Home = ({ navigation }) => {
         setModalVisible(!isModalVisible);
         setSelectedIndex(index);
     };
-    const { list } = useSelector((state) => state?.addCat);
+    const { list, filterList } = useSelector((state) => state?.addCat);
+    console.log('------filterList------>', filterList);
 
     const onPressDelete = () => {
         Alert.alert('Cattify', 'Are you sure to delete?', [
@@ -56,11 +58,15 @@ const Home = ({ navigation }) => {
             name: 'Update Cat',
         });
     };
+    const onPressSearch = (text) => {
+        getFilterData(text);
+    };
     const renderItem = ({ item, index }) => (
         <Cards item={item} index={index} onPress={toggleModal} />
     );
     return (
         <View style={styles.container}>
+            {list && <SearchInput onPress={(text) => onPressSearch(text)} />}
             <FlatList
                 data={list}
                 renderItem={renderItem}
@@ -103,7 +109,11 @@ const Home = ({ navigation }) => {
 export { Home };
 
 const styles = StyleSheet.create({
-    container: { flexGrow: 1, backgroundColor: Colors.primary },
+    container: {
+        flexGrow: 1,
+        backgroundColor: Colors.primary,
+        paddingHorizontal: 20,
+    },
     view: {
         justifyContent: 'flex-end',
         margin: 5,
