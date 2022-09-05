@@ -5,6 +5,7 @@ import { NAVIGATION } from '../common/constants';
 import { Home, AddCat } from '../screens';
 import { Colors } from '../themes';
 
+// Screen Navigation
 const Navigation = () => {
     const Stack = createNativeStackNavigator();
     return (

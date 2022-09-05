@@ -1,3 +1,4 @@
+/* Card component */
 import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
 import React from 'react';
 import { Colors, fontSize } from '../themes';

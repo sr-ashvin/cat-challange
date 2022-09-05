@@ -1,3 +1,8 @@
+/*
+ * This is update following data. the Save the data,
+ * Update the data, Delete, search the data
+ *
+ */
 import {
     SET_CATS,
     DELETE_CATS,
@@ -57,7 +62,6 @@ const AddCatReducer = (state = INITIAL_STATE, { type, payload }) => {
                 console.log('ddddd-->', item.name);
                 return item.name.includes(payload.text);
             });
-            console.log('---filterData rducer--->', filterData);
             return {
                 ...state,
                 filterList: filterData,

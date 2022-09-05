@@ -1,40 +1,42 @@
-import {
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
-    FlatList,
-    Alert,
-    Image,
-} from 'react-native';
-import React, { useState } from 'react';
+import { StyleSheet, View, FlatList, Alert } from 'react-native';
+import React, { useEffect, useState } from 'react';
 import Modal from 'react-native-modal';
 import { useDispatch, useSelector } from 'react-redux';
 /**********Custom Import ************/
-import { NAVIGATION } from '../../common/constants';
-import { deleteCatItem, getFilterData } from '../AddCats/actions';
+import { NAVIGATION } from '../../../common/constants';
+import {
+    deleteCatItem,
+    getFilterData,
+    clearFilterData,
+} from '../../AddCats/actions';
 import {
     AbsoluteButton,
     ButtonWithIcon,
     Cards,
     EmptyData,
     SearchInput,
-} from '../../components';
-import { Colors } from '../../themes';
-import { images } from '../../common/assets/images';
-import { notifyMessage } from '../../common/utils';
+} from '../../../components';
+import { Colors } from '../../../themes';
+import { images } from '../../../common/assets/images';
+import { notifyMessage } from '../../../common/utils';
 
 const Home = ({ navigation }) => {
     const dispatch = useDispatch();
     const [isModalVisible, setModalVisible] = useState(false);
     const [selectedIndex, setSelectedIndex] = useState(null);
+    const [searchValue, setSearchValue] = useState('');
 
     const toggleModal = (index) => {
         setModalVisible(!isModalVisible);
         setSelectedIndex(index);
     };
     const { list, filterList } = useSelector((state) => state?.addCat);
-    console.log('------filterList------>', filterList);
+
+    useEffect(() => {
+        return () => {
+            dispatch(clearFilterData());
+        };
+    }, []);
 
     const onPressDelete = () => {
         Alert.alert('Cattify', 'Are you sure to delete?', [
@@ -59,21 +61,27 @@ const Home = ({ navigation }) => {
         });
     };
     const onPressSearch = (text) => {
-        getFilterData(text);
+        setSearchValue(text);
+        dispatch(getFilterData(text));
     };
     const renderItem = ({ item, index }) => (
         <Cards item={item} index={index} onPress={toggleModal} />
     );
+    const data = searchValue ? filterList : list;
     return (
         <View style={styles.container}>
-            {list && <SearchInput onPress={(text) => onPressSearch(text)} />}
+            {list && (
+                <SearchInput onPress={onPressSearch} value={searchValue} />
+            )}
             <FlatList
-                data={list}
+                data={data}
                 renderItem={renderItem}
                 removeClippedSubviews
                 keyExtractor={(item, index) => index}
                 extraData={list}
                 ListEmptyComponent={<EmptyData />}
+                style={styles.marginBottom}
+                showsHorizontalScrollIndicator={false}
             />
             <AbsoluteButton
                 onPress={() =>
@@ -99,6 +107,8 @@ const Home = ({ navigation }) => {
                         text='Delete'
                         onPress={onPressDelete}
                         image={images.delete}
+                        imageStyle={{ tintColor: Colors.red }}
+                        textStyle={{ color: Colors.red }}
                     />
                 </View>
             </Modal>
@@ -125,4 +135,5 @@ const styles = StyleSheet.create({
         borderTopRightRadius: 15,
         paddingTop: 10,
     },
+    marginBottom: { marginBottom: 100 },
 });

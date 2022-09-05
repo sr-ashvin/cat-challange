@@ -1,3 +1,4 @@
+/* Absolute button component */
 import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 import React from 'react';
 import { Colors } from '../themes';
@@ -15,7 +16,7 @@ export { AbsoluteButton };
 const styles = StyleSheet.create({
     button: {
         position: 'absolute',
-        bottom: 20,
+        bottom: 50,
         right: 30,
         width: 50,
         height: 50,

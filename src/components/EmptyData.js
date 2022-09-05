@@ -1,3 +1,4 @@
+/* Empty record component */
 import { StyleSheet, Text, View, Image } from 'react-native';
 import React from 'react';
 import { images } from '../common/assets/images';

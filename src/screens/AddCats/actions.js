@@ -7,6 +7,7 @@ export const UPDATE_CATS_ITEM = `${CATS} Update Item Request`;
 export const FILTER_CATS_ITEM = `${CATS} filter Item Request`;
 export const CLEAR_FILTER_CATS_ITEM = `${CATS} Clear filter Item Request`;
 
+/* Save the cat animal Detail */
 export const setCatDetail = (data) => {
     return async (dispatch) => {
         dispatch({
@@ -15,6 +16,7 @@ export const setCatDetail = (data) => {
         });
     };
 };
+/* delete the cat animal Detail */
 export const deleteCatItem = (id) => {
     return async (dispatch) => {
         dispatch({
@@ -23,6 +25,7 @@ export const deleteCatItem = (id) => {
         });
     };
 };
+/* Fetch the cat animal Detail */
 export const getCatDetailById = (id) => {
     return async (dispatch) => {
         dispatch({
@@ -31,6 +34,7 @@ export const getCatDetailById = (id) => {
         });
     };
 };
+/* Clear the cat animal Detail */
 export const clearCatDetailById = () => {
     return async (dispatch) => {
         dispatch({
@@ -39,6 +43,7 @@ export const clearCatDetailById = () => {
         });
     };
 };
+/* Update the cat animal Detail */
 export const updateCatDetail = (data, id) => {
     return async (dispatch) => {
         dispatch({
@@ -47,6 +52,7 @@ export const updateCatDetail = (data, id) => {
         });
     };
 };
+/* Filter the cat animal data */
 export const getFilterData = (text) => {
     return async (dispatch) => {
         dispatch({
@@ -55,6 +61,7 @@ export const getFilterData = (text) => {
         });
     };
 };
+/* Clear the filter  cat animal data */
 export const clearFilterData = () => {
     return async (dispatch) => {
         dispatch({
@@ -63,3 +70,4 @@ export const clearFilterData = () => {
         });
     };
 };
+/* Fetch the filtered cat animal data */

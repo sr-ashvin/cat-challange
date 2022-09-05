@@ -1,4 +1,8 @@
-import { StyleSheet, Text, View, TextInput } from 'react-native';
+/*
+ * Add Cat animal
+ * Update Cat animal
+ */
+import { StyleSheet, View } from 'react-native';
 import React, { useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -6,11 +10,11 @@ import {
     getCatDetailById,
     clearCatDetailById,
     updateCatDetail,
-} from './actions';
+} from '../actions';
 import { useEffect } from 'react';
-import { Button, Input } from '../../components';
-import { Colors } from '../../themes';
-import { notifyMessage } from '../../common/utils';
+import { Button, Input } from '../../../components';
+import { Colors } from '../../../themes';
+import { notifyMessage } from '../../../common/utils';
 
 const AddCat = ({ route, navigation }) => {
     const dispatch = useDispatch();
@@ -27,6 +31,7 @@ const AddCat = ({ route, navigation }) => {
         dispatch(getCatDetailById(route?.params?.id));
         return () => {
             dispatch(clearCatDetailById());
+
             setName();
             setBreed();
             setDescription();
@@ -41,6 +46,7 @@ const AddCat = ({ route, navigation }) => {
         }
     }, [item]);
 
+    //Save and update the records
     const saveCat = () => {
         const params = {
             name,

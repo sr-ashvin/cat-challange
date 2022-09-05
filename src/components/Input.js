@@ -1,3 +1,4 @@
+/* Input component */
 import { StyleSheet, Text, View, TextInput } from 'react-native';
 import React from 'react';
 import { Colors, fontSize } from '../themes';

@@ -1,12 +1,12 @@
-import { StyleSheet, Text, View } from 'react-native';
+/* search input component */
+import { StyleSheet } from 'react-native';
 import React, { useState } from 'react';
 import { Input } from './Input';
 
-const SearchInput = ({ onPress }) => {
-    const onChangeText = (text) => {
-        onPress(text);
-    };
-    return <Input placeholder='Search..' onChangeText={onChangeText} />;
+const SearchInput = ({ onPress, value }) => {
+    return (
+        <Input placeholder='Search..' onChangeText={onPress} value={value} />
+    );
 };
 
 export { SearchInput };
