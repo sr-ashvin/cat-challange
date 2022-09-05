@@ -1,3 +1,6 @@
+/*
+ * Home Screen, Display the Cat animal listing
+ */
 import { StyleSheet, View, FlatList, Alert } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import Modal from 'react-native-modal';
