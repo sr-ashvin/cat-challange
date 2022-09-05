@@ -24,23 +24,25 @@ Description
 
 ## Action
 
-Add
-Update
-Delete
+Add,
+Update,
+Delete,
 Search by name
 
 ## Add/Update Cat Screen
 
 Fields
-Cat Name
-Cat Breed
+---------
+Cat Name,
+Cat Breed,
 Cat Description
 
 ## Validation
 
 Empty field validation
-Cat Name
-Cat Breed
+-----------------------
+Cat Name,
+Cat Breed,
 Cat Description
 
 When you move next without enter the value, you can get focused that field.
