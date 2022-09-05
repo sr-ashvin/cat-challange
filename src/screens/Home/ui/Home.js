@@ -71,7 +71,7 @@ const Home = ({ navigation }) => {
         <Cards item={item} index={index} onPress={toggleModal} />
     );
     const data = searchValue ? filterList : list;
-    console.log('------list---->', list);
+
     return (
         <View style={styles.container}>
             {list.length > 0 ? (
